@@ -45,7 +45,11 @@ export default function Login() {
                 </div>
 
                 <div className="mt-2 space-y-[14px]">
-                    <Button type="button">Start Watching</Button>
+                    <div>
+                        <Link href={route("browse")}>
+                            <Button type="button">Start Watching</Button>
+                        </Link>
+                    </div>
 
                     <div>
                         <Link href={route("register")}>

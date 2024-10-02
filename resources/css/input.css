@@ -1,10 +1,10 @@
 .input-primary {
-    @apply !border-0 !bg-form-bg text-white focus:!border focus:!border-alerange focus:!ring-alerange;
+    @apply !bg-form-bg focus:!border-alerange focus:!ring-alerange !border-0 text-white focus:!border;
 }
 
 .input-primary-outline {
-    @apply !border-alerange !bg-[#fff] text-form-bg focus:!border-alerange focus:!ring-alerange;
-    @apply file:rounded-md file:!bg-alerange file:p-2 file:text-white;
+    @apply !border-alerange text-form-bg focus:!border-alerange focus:!ring-alerange !bg-[#fff];
+    @apply file:!bg-alerange file:rounded-md file:p-2 file:text-white;
 }
 
 .input-error {

@@ -61,7 +61,11 @@ export default function Register() {
                 </div>
 
                 <div className="mt-2 space-y-[14px]">
-                    <Button type="button">Register</Button>
+                    <div>
+                        <Link href={route("browse")}>
+                            <Button type="button">Register</Button>
+                        </Link>
+                    </div>
 
                     <div>
                         <Link href={route("login")}>
