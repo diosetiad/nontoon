@@ -1,18 +1,28 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import { Link } from '@inertiajs/react';
+import { Link } from "@inertiajs/react";
 
 export default function Guest({ children }) {
     return (
-        <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
-                <Link href="/">
-                    <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                </Link>
-            </div>
+        <main className="min-h-screen overflow-x-hidden bg-black">
+            <section className="flex min-h-screen flex-row items-center justify-around">
+                <div className="laptop:block hidden h-screen w-auto">
+                    <img
+                        src="/images/movie-collage.png"
+                        alt="Movie collage"
+                        className="laptop:max-w-[450px] fixed left-10 top-0 h-screen 2xl:max-w-[640px]"
+                    />
+                </div>
 
-            <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                {children}
-            </div>
-        </div>
+                <div className="flex w-full flex-col gap-[70px] px-8 py-14 text-white md:w-auto">
+                    <Link href="/" className="w-fit">
+                        <img
+                            src="/images/nontoon-white.svg"
+                            alt="Nontoon logo"
+                        />
+                    </Link>
+
+                    {children}
+                </div>
+            </section>
+        </main>
     );
 }
