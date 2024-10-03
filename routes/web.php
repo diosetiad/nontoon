@@ -22,4 +22,8 @@ Route::get('browse', function () {
     return Inertia::render('Browse');
 })->name('browse');
 
+Route::get('subscribe', function () {
+    return Inertia::render('Subscribe');
+})->name('subscribe');
+
 require __DIR__ . '/auth.php';

@@ -66,7 +66,7 @@ const Menus = [
 
 const Others = [
     {
-        link: null,
+        link: "subscribe",
         icon: (
             <svg
                 width="24"
