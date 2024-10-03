@@ -26,4 +26,8 @@ Route::get('subscribe', function () {
     return Inertia::render('Subscribe');
 })->name('subscribe');
 
+Route::get('/watch/{slug}', function () {
+    return Inertia::render('Watch');
+})->name('watch');
+
 require __DIR__ . '/auth.php';

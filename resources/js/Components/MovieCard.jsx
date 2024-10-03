@@ -50,7 +50,10 @@ export default function MovieCard({
                         <img src="/icons/ic_play.svg" alt="Play icon" />
                     </button>
 
-                    <a href={slug} className="absolute inset-0" />
+                    <a
+                        href={route("watch", slug)}
+                        className="absolute inset-0"
+                    />
                 </div>
             )}
 
@@ -76,7 +79,10 @@ export default function MovieCard({
                         <img src="/icons/ic_play.svg" alt="Play icon" />
                     </button>
 
-                    <a href={slug} className="absolute inset-0" />
+                    <a
+                        href={route("watch", slug)}
+                        className="absolute inset-0"
+                    />
                 </div>
             )}
         </>
