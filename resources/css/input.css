@@ -1,0 +1,12 @@
+.input-primary {
+    @apply !bg-form-bg focus:!border-alerange focus:!ring-alerange !border-0 text-white focus:!border;
+}
+
+.input-primary-outline {
+    @apply !border-alerange text-form-bg focus:!border-alerange focus:!ring-alerange !bg-[#fff];
+    @apply file:!bg-alerange file:rounded-md file:p-2 file:text-white;
+}
+
+.input-error {
+    @apply !border-transparent !ring-2 !ring-red-600;
+}
