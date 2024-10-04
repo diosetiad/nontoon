@@ -3,7 +3,7 @@ import useClickOutside from "@/Hooks/ClickOutside";
 import Sidebar from "./SidebarLayout";
 import Topbar from "./TopbarLayout";
 
-export default function Authenticated({ children }) {
+export default function Authenticated({ auth, children }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const sidebarTarget = useClickOutside(() => setSidebarOpen(false));
 
@@ -17,12 +17,12 @@ export default function Authenticated({ children }) {
 
     return (
         <div className="relative min-h-screen w-full">
-            <Topbar onHamburgerClick={triggerSidebar} />
+            <Topbar onHamburgerClick={triggerSidebar} name={auth.user.name} />
 
-            <Sidebar isOpen={sidebarOpen} onClose={sidebarTarget} />
+            <Sidebar isOpen={sidebarOpen} onClose={sidebarTarget} auth={auth} />
 
             <div className="absolute top-[172px] z-0 w-full">
-                <main className="laptop:ml-[250px] laptop:px-14 px-8 pb-14">
+                <main className="px-8 pb-14 laptop:ml-[250px] laptop:px-14">
                     {children}
                 </main>
             </div>

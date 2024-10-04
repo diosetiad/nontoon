@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\BrowseController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubscriptionPlanController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,16 +21,14 @@ use Inertia\Inertia;
 
 Route::redirect('/', '/login');
 
-Route::get('browse', function () {
-    return Inertia::render('Browse');
-})->name('browse');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('browse', [BrowseController::class, 'index'])->name('browse');
 
-Route::get('subscribe', function () {
-    return Inertia::render('Subscribe');
-})->name('subscribe');
+    Route::get('watch/{movie:slug}', [MovieController::class, 'show'])->middleware('checkUserSubscription:true')->name('watch');
 
-Route::get('/watch/{slug}', function () {
-    return Inertia::render('Watch');
-})->name('watch');
+    Route::get('subscribe', [SubscriptionPlanController::class, 'index'])->middleware('checkUserSubscription:false')->name('subscribe');
+});
+
+Route::post('subscribe/{subscription_plan}', [SubscriptionPlanController::class, 'store'])->middleware(['auth', 'role:user', 'checkUserSubscription:false'])->name('subscribe.store');
 
 require __DIR__ . '/auth.php';

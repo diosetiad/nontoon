@@ -3,7 +3,7 @@ import Flickity from "react-flickity-component";
 import { Head } from "@inertiajs/react";
 import MovieCard from "@/Components/MovieCard";
 
-export default function Browse() {
+export default function Browse({ auth, featuredMovies, movies }) {
     const flickityOptions = {
         cellAlign: "left",
         contain: true,
@@ -15,7 +15,7 @@ export default function Browse() {
     };
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout auth={auth}>
             <Head title="Browse">
                 <link
                     rel="stylesheet"
@@ -29,35 +29,43 @@ export default function Browse() {
                         Featured Movies
                     </h1>
 
-                    <Flickity options={flickityOptions}>
-                        {[1, 2, 3, 4].map((i) => (
-                            <MovieCard
-                                isFeatured
-                                key={i}
-                                thumbnail="/images/featured-1.png"
-                                rating={7.5}
-                                name={`The Batman in Love ${i}`}
-                                genre="Action"
-                                slug="the-batman-in-love"
-                            />
-                        ))}
-                    </Flickity>
+                    {featuredMovies.length > 0 ? (
+                        <Flickity options={flickityOptions}>
+                            {featuredMovies.map((featuredMovie) => (
+                                <MovieCard
+                                    isFeatured
+                                    key={featuredMovie.id}
+                                    thumbnail={featuredMovie.thumbnail}
+                                    rating={featuredMovie.rating}
+                                    name={featuredMovie.name}
+                                    genre={featuredMovie.genre}
+                                    slug={featuredMovie.slug}
+                                />
+                            ))}
+                        </Flickity>
+                    ) : (
+                        <p>Featured movies are not available yet.</p>
+                    )}
                 </section>
 
                 <section className="flex flex-col gap-4">
                     <h1 className="text-[22px] font-semibold">Browse</h1>
 
-                    <Flickity options={flickityOptions}>
-                        {[1, 2, 3, 4, 5, 6].map((i) => (
-                            <MovieCard
-                                key={i}
-                                thumbnail="/images/browse-1.png"
-                                name={`Golden Cat ${i}`}
-                                genre="Cartoon"
-                                slug="golden-cat"
-                            />
-                        ))}
-                    </Flickity>
+                    {movies.length > 0 ? (
+                        <Flickity options={flickityOptions}>
+                            {movies.map((movie) => (
+                                <MovieCard
+                                    key={movie.id}
+                                    thumbnail={movie.thumbnail}
+                                    name={movie.name}
+                                    genre={movie.genre}
+                                    slug={movie.slug}
+                                />
+                            ))}
+                        </Flickity>
+                    ) : (
+                        <p>Movies are not available yet.</p>
+                    )}
                 </section>
             </div>
         </AuthenticatedLayout>

@@ -1,10 +1,33 @@
+import { useEffect } from "react";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import Button from "@/Components/Button";
-import { Head, Link } from "@inertiajs/react";
+import InputError from "@/Components/InputError";
+import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Login() {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        email: "",
+        password: "",
+    });
+
+    useEffect(() => {
+        return () => {
+            reset("password");
+        };
+    }, []);
+
+    const handleOnChange = (event) => {
+        setData(event.target.name, event.target.value);
+    };
+
+    const submit = (e) => {
+        e.preventDefault();
+
+        post(route("login"));
+    };
+
     return (
         <GuestLayout>
             <Head title="Login" />
@@ -19,7 +42,12 @@ export default function Login() {
                 </p>
             </div>
 
-            <form className="flex flex-col gap-6 md:w-[370px]">
+            <form
+                onSubmit={submit}
+                className="flex flex-col gap-6 md:w-[370px]"
+            >
+                <InputError message={errors.email} />
+
                 <div className="space-y-2">
                     <InputLabel htmlFor="email" value="Email Address" />
 
@@ -27,9 +55,13 @@ export default function Login() {
                         id="email"
                         type="email"
                         name="email"
+                        value={data.email}
                         autoComplete="email"
                         isFocused={true}
                         placeholder="Your email"
+                        onChange={handleOnChange}
+                        required
+                        isError={errors.email}
                     />
                 </div>
 
@@ -40,16 +72,19 @@ export default function Login() {
                         id="password"
                         type="password"
                         name="password"
+                        value={data.password}
+                        autoComplete="off"
                         placeholder="Your password"
+                        onChange={handleOnChange}
+                        required
+                        isError={errors.email}
                     />
                 </div>
 
                 <div className="mt-2 space-y-[14px]">
-                    <div>
-                        <Link href={route("browse")}>
-                            <Button type="button">Start Watching</Button>
-                        </Link>
-                    </div>
+                    <Button type="submit" processing={processing}>
+                        Start Watching
+                    </Button>
 
                     <div>
                         <Link href={route("register")}>

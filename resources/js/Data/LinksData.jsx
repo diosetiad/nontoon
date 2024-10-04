@@ -82,7 +82,7 @@ const Others = [
                 />
             </svg>
         ),
-        text: "Subscriptions",
+        text: "Subscribe",
         method: "get",
     },
     {
