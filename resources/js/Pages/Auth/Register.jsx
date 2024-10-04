@@ -1,10 +1,35 @@
+import { useEffect } from "react";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import Button from "@/Components/Button";
-import { Head, Link } from "@inertiajs/react";
+import InputError from "@/Components/InputError";
+import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Register() {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+    });
+
+    useEffect(() => {
+        return () => {
+            reset("password", "password_confirmation");
+        };
+    }, []);
+
+    const handleOnChange = (event) => {
+        setData(event.target.name, event.target.value);
+    };
+
+    const submit = (e) => {
+        e.preventDefault();
+
+        post(route("register"));
+    };
+
     return (
         <GuestLayout>
             <Head title="Register" />
@@ -19,7 +44,10 @@ export default function Register() {
                 </p>
             </div>
 
-            <form className="flex flex-col gap-6 md:w-[370px]">
+            <form
+                onSubmit={submit}
+                className="flex flex-col gap-6 md:w-[370px]"
+            >
                 <div className="space-y-2">
                     <InputLabel htmlFor="name" value="Full Name" />
 
@@ -27,10 +55,12 @@ export default function Register() {
                         id="name"
                         type="text"
                         name="name"
-                        defaultValue="John Doe"
-                        autoComplete="on"
+                        value={data.name}
+                        autoComplete="off"
                         isFocused={true}
                         placeholder="Your full name"
+                        onChange={handleOnChange}
+                        required
                     />
                 </div>
 
@@ -41,10 +71,15 @@ export default function Register() {
                         id="email"
                         type="email"
                         name="email"
-                        defaultValue="johndoe@nontoon.test"
-                        autoComplete="on"
+                        value={data.email}
+                        autoComplete="off"
                         placeholder="Your email"
+                        onChange={handleOnChange}
+                        required
+                        isError={errors.email}
                     />
+
+                    <InputError message={errors.email} />
                 </div>
 
                 <div className="space-y-2">
@@ -54,18 +89,39 @@ export default function Register() {
                         id="password"
                         type="password"
                         name="password"
-                        defaultValue="password"
+                        value={data.password}
                         autoComplete="off"
                         placeholder="Your password"
+                        onChange={handleOnChange}
+                        required
                     />
                 </div>
 
+                <div className="space-y-2">
+                    <InputLabel
+                        htmlFor="password_confirmation"
+                        value="Confirm Password"
+                    />
+
+                    <TextInput
+                        id="password_confirmation"
+                        type="password"
+                        name="password_confirmation"
+                        value={data.password_confirmation}
+                        autoComplete="off"
+                        placeholder="Confirm your password"
+                        onChange={handleOnChange}
+                        required
+                        isError={errors.password}
+                    />
+
+                    <InputError message={errors.password} />
+                </div>
+
                 <div className="mt-2 space-y-[14px]">
-                    <div>
-                        <Link href={route("browse")}>
-                            <Button type="button">Register</Button>
-                        </Link>
-                    </div>
+                    <Button type="submit" processing={processing}>
+                        Register
+                    </Button>
 
                     <div>
                         <Link href={route("login")}>
