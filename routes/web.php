@@ -24,11 +24,11 @@ Route::redirect('/', '/login');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('browse', [BrowseController::class, 'index'])->name('browse');
 
-    Route::get('watch/{movie:slug}', [MovieController::class, 'show'])->name('watch');
+    Route::get('watch/{movie:slug}', [MovieController::class, 'show'])->middleware('checkUserSubscription:true')->name('watch');
 
-    Route::get('subscribe', [SubscriptionPlanController::class, 'index'])->name('subscribe');
+    Route::get('subscribe', [SubscriptionPlanController::class, 'index'])->middleware('checkUserSubscription:false')->name('subscribe');
 });
 
-Route::post('subscribe/{subscription_plan}', [SubscriptionPlanController::class, 'store'])->middleware(['auth', 'role:user'])->name('subscribe.store');
+Route::post('subscribe/{subscription_plan}', [SubscriptionPlanController::class, 'store'])->middleware(['auth', 'role:user', 'checkUserSubscription:false'])->name('subscribe.store');
 
 require __DIR__ . '/auth.php';
