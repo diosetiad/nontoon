@@ -1,10 +1,10 @@
 import ReactPlayer from "react-player";
 import { Head, Link } from "@inertiajs/react";
 
-export default function watching() {
+export default function Watch({ movie }) {
     return (
         <>
-            <Head title="Watch" />
+            <Head title={movie.name} />
 
             <main className="min-h-screen bg-form-bg py-14 text-white xl:h-screen">
                 <section className="flex h-screen flex-col gap-[50px] xl:h-full">
@@ -19,12 +19,12 @@ export default function watching() {
                         </Link>
 
                         <h1 className="w-full text-center text-[22px] font-medium">
-                            The Batman in Love
+                            {movie.name}
                         </h1>
                     </div>
 
                     <ReactPlayer
-                        url="https://youtu.be/u34gHaRiBIU?si=5S0jCy3RaLS73V-Q"
+                        url={movie.video_url}
                         controls
                         width="100%"
                         height="100%"

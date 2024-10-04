@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BrowseController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -21,14 +22,12 @@ Route::redirect('/', '/login');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('browse', [BrowseController::class, 'index'])->name('browse');
+
+    Route::get('watch/{movie:slug}', [MovieController::class, 'show'])->name('watch');
 });
 
 Route::get('subscribe', function () {
     return Inertia::render('Subscribe');
 })->name('subscribe');
-
-Route::get('/watch/{slug}', function () {
-    return Inertia::render('Watch');
-})->name('watch');
 
 require __DIR__ . '/auth.php';
