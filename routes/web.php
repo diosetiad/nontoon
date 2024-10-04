@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BrowseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -18,9 +19,9 @@ use Inertia\Inertia;
 
 Route::redirect('/', '/login');
 
-Route::get('browse', function () {
-    return Inertia::render('Browse');
-})->name('browse');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('browse', [BrowseController::class, 'index'])->name('browse');
+});
 
 Route::get('subscribe', function () {
     return Inertia::render('Subscribe');
