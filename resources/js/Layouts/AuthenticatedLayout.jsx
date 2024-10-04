@@ -19,7 +19,7 @@ export default function Authenticated({ auth, children }) {
         <div className="relative min-h-screen w-full">
             <Topbar onHamburgerClick={triggerSidebar} name={auth.user.name} />
 
-            <Sidebar isOpen={sidebarOpen} onClose={sidebarTarget} />
+            <Sidebar isOpen={sidebarOpen} onClose={sidebarTarget} auth={auth} />
 
             <div className="absolute top-[172px] z-0 w-full">
                 <main className="px-8 pb-14 laptop:ml-[250px] laptop:px-14">

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,6 +20,11 @@ class UserSubscription extends Model
         'payment_status',
         'snap_token',
     ];
+
+    public function getIsExpiredAttribute()
+    {
+        return Carbon::now()->isAfter($this->expired_date);
+    }
 
     public function subscriptionPlan(): BelongsTo
     {

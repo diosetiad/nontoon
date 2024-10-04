@@ -1,16 +1,25 @@
-export default function ActiveSubscription({ isPremium }) {
+export default function ActiveSubscriptionCard({
+    isPremium,
+    name,
+    remainingActiveDays,
+    activeDays,
+}) {
     return (
         <>
             {!isPremium && (
                 <div className="mt-[109px] pr-8 xl:mt-auto">
                     <div className="rounded-3xl bg-white p-4 outline outline-1 outline-[#f1f1f1]">
                         <h2 className="mb-8 text-lg font-semibold text-black">
-                            Basic
+                            {name}
                         </h2>
                         <div className="text-sm text-black">
-                            1 days left out of 30
+                            {remainingActiveDays} days left out of {activeDays}
                         </div>
-                        <progress className="progress-bar" value={1} max={30} />
+                        <progress
+                            className="progress-bar"
+                            value={remainingActiveDays}
+                            max={activeDays}
+                        />
                     </div>
                 </div>
             )}
@@ -20,12 +29,16 @@ export default function ActiveSubscription({ isPremium }) {
                     <div className="rounded-3xl bg-black p-4">
                         <img src="/icons/ic_star-rounded.svg" alt="Star logo" />
                         <h2 className="mb-8 mt-4 text-lg font-semibold text-white">
-                            Premium
+                            {name}
                         </h2>
                         <div className="text-sm text-white">
-                            1 days left out of 30
+                            {remainingActiveDays} days left out of {activeDays}
                         </div>
-                        <progress className="progress-bar" value={1} max={30} />
+                        <progress
+                            className="progress-bar"
+                            value={remainingActiveDays}
+                            max={activeDays}
+                        />
                     </div>
                 </div>
             )}
