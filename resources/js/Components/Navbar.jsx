@@ -1,18 +1,20 @@
 import NavLink from "@/Components/NavLink";
 import { Menus, Others } from "@/Data/LinksData";
 
-export default function Navbar() {
+export default function Navbar({ isAdmin }) {
     return (
         <nav
             role="Sidebar navigation"
             className="mt-[59px] flex flex-col gap-[50px]"
         >
             <div>
-                <h3 className="text-gray-1 mb-4">Menu</h3>
+                <h3 className="mb-4 text-gray-1">Menu</h3>
 
                 <ul>
                     <li className="space-y-5">
-                        {Menus.map((menu, index) => (
+                        {Menus.filter((menu) =>
+                            menu.roles.includes(isAdmin ? "admin" : "user"),
+                        ).map((menu, index) => (
                             <NavLink
                                 key={`${index}-${menu.text}`}
                                 link={menu.link}
@@ -27,11 +29,13 @@ export default function Navbar() {
             </div>
 
             <div>
-                <h3 className="text-gray-1 mb-4">Others</h3>
+                <h3 className="mb-4 text-gray-1">Others</h3>
 
                 <ul>
                     <li className="space-y-5">
-                        {Others.map((other, index) => (
+                        {Others.filter((menu) =>
+                            menu.roles.includes(isAdmin ? "admin" : "user"),
+                        ).map((other, index) => (
                             <NavLink
                                 key={`${index}-${other.text}`}
                                 link={other.link}

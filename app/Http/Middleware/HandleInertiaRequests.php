@@ -57,6 +57,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
                 'activePlan' => $this->activePlan(),
+                'isAdmin' => $request->user() ? $request->user()->hasRole('admin') : null,
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
