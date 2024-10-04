@@ -11,7 +11,7 @@ export default function MovieCard({
             {isFeatured && (
                 <div className="group relative mr-[30px] w-full shrink-0 text-white md:w-auto">
                     <img
-                        src={thumbnail}
+                        src={`/storage/${thumbnail}`}
                         alt="Movie thumbnail"
                         className="h-[340px] w-[520px] rounded-[30px] object-cover"
                     />
@@ -36,7 +36,7 @@ export default function MovieCard({
 
                             <button
                                 type="button"
-                                className="block translate-x-[100px] transition duration-500 ease-in-out group-hover:translate-x-0 max-[360px]:hidden"
+                                className="block translate-x-[100px] transition duration-500 ease-in-out group-hover:translate-x-0 max-[640px]:hidden"
                             >
                                 <img src="/icons/ic_play.svg" alt="Play icon" />
                             </button>
@@ -45,7 +45,7 @@ export default function MovieCard({
 
                     <button
                         type="button"
-                        className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-[500px] transition duration-500 ease-in-out group-hover:-translate-y-1/2 max-[360px]:block"
+                        className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-[500px] transition duration-500 ease-in-out group-hover:-translate-y-1/2 max-[640px]:block"
                     >
                         <img src="/icons/ic_play.svg" alt="Play icon" />
                     </button>
@@ -60,7 +60,7 @@ export default function MovieCard({
             {!isFeatured && (
                 <div className="group relative mr-[30px] w-auto shrink-0 text-white">
                     <img
-                        src={thumbnail}
+                        src={`/storage/${thumbnail}`}
                         alt="Movie thumbnail"
                         className="h-[340px] w-[250px] rounded-[30px] object-cover"
                     />

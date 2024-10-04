@@ -36,6 +36,8 @@ Route::post('subscribe/{subscription_plan}', [SubscriptionPlanController::class,
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::resource('movies', AdminMovieController::class);
 
+    Route::put('movies/{movie}/restore', [AdminMovieController::class, 'restore'])->name('movies.restore');
+
     Route::resource('subscriptions', AdminSubscriptionPlanController::class);
 });
 
