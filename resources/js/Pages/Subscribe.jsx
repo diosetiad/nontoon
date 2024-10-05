@@ -31,6 +31,7 @@ export default function Subscribe({ auth, subscriptionPlans }) {
                     <div className="flex flex-col items-start gap-10 md:flex-row">
                         {subscriptionPlans.map((subscriptionPlan) => (
                             <SubscriptionCard
+                                isAdmin={auth.isAdmin}
                                 key={subscriptionPlan.id}
                                 isPremium={subscriptionPlan.name === "Premium"}
                                 name={subscriptionPlan.name}

@@ -38,7 +38,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
     Route::put('movies/{movie}/restore', [AdminMovieController::class, 'restore'])->name('movies.restore');
 
-    Route::resource('subscriptions', AdminSubscriptionPlanController::class);
+    Route::resource('subscription-plans', AdminSubscriptionPlanController::class);
+
+    Route::put('subscription-plans/{subscription_plan}/restore', [AdminSubscriptionPlanController::class, 'restore'])->name('subscription-plans.restore');
 });
 
 require __DIR__ . '/auth.php';

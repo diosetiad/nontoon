@@ -8,6 +8,7 @@ export default function SubscriptionCard({
     features,
     isPremium,
     onClickSubscription,
+    isAdmin,
 }) {
     return (
         <>
@@ -40,15 +41,17 @@ export default function SubscriptionCard({
                         ))}
                     </ul>
 
-                    <div onClick={onClickSubscription}>
-                        <Button
-                            type="button"
-                            variant="white-outline"
-                            className="text-base font-normal"
-                        >
-                            Start {name}
-                        </Button>
-                    </div>
+                    {!isAdmin && (
+                        <div onClick={onClickSubscription}>
+                            <Button
+                                type="button"
+                                variant="white-outline"
+                                className="text-base font-normal"
+                            >
+                                Start {name}
+                            </Button>
+                        </div>
+                    )}
                 </div>
             )}
 
@@ -109,15 +112,17 @@ export default function SubscriptionCard({
                         ))}
                     </ul>
 
-                    <div onClick={onClickSubscription}>
-                        <Button
-                            type="button"
-                            variant="primary"
-                            className="text-base"
-                        >
-                            Subscribe Now
-                        </Button>
-                    </div>
+                    {!isAdmin && (
+                        <div onClick={onClickSubscription}>
+                            <Button
+                                type="button"
+                                variant="primary"
+                                className="text-base"
+                            >
+                                Subscribe Now
+                            </Button>
+                        </div>
+                    )}
                 </div>
             )}
         </>

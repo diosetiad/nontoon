@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\SubscriptionPlans\Store;
+use App\Http\Requests\Admin\SubscriptionPlans\Update;
 use App\Models\SubscriptionPlan;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -16,7 +18,11 @@ class SubscriptionPlanController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Subscriptions/Index');
+        $subscriptionPlans = SubscriptionPlan::withTrashed()->orderBy('deleted_at')->get();
+
+        return Inertia::render('Admin/SubscriptionPlans/Index', [
+            'subscriptionPlans' => $subscriptionPlans
+        ]);
     }
 
     /**
@@ -26,7 +32,7 @@ class SubscriptionPlanController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/SubscriptionPlans/Create');
     }
 
     /**
@@ -35,9 +41,20 @@ class SubscriptionPlanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Store $request)
     {
-        //
+        $data = $request->validated();
+
+        if (isset($data['features'])) {
+            $data['features'] = json_encode($data['features']);
+        }
+
+        $subscriptionPlan = SubscriptionPlan::create($data);
+
+        return redirect(route('subscription-plans.index'))->with([
+            'message' => 'Subscription plan was created successfully!',
+            'type' => 'success'
+        ]);
     }
 
     /**
@@ -59,7 +76,11 @@ class SubscriptionPlanController extends Controller
      */
     public function edit(SubscriptionPlan $subscriptionPlan)
     {
-        //
+        $subscriptionPlan->features = json_decode($subscriptionPlan->features, true);
+
+        return Inertia::render('Admin/SubscriptionPlans/Edit', [
+            'subscriptionPlan' => $subscriptionPlan
+        ]);
     }
 
     /**
@@ -69,9 +90,20 @@ class SubscriptionPlanController extends Controller
      * @param  \App\Models\SubscriptionPlan  $subscriptionPlan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SubscriptionPlan $subscriptionPlan)
+    public function update(Update $request, SubscriptionPlan $subscriptionPlan)
     {
-        //
+        $data = $request->validated();
+
+        if (isset($data['features'])) {
+            $data['features'] = json_encode($data['features']);
+        }
+
+        $subscriptionPlan->update($data);
+
+        return redirect(route('subscription-plans.index'))->with([
+            'message' => 'Subscription plan was updated successfully!',
+            'type' => 'success'
+        ]);
     }
 
     /**
@@ -82,6 +114,20 @@ class SubscriptionPlanController extends Controller
      */
     public function destroy(SubscriptionPlan $subscriptionPlan)
     {
-        //
+        $subscriptionPlan->delete();
+
+        return redirect(route('subscription-plans.index'))->with([
+            'message' => 'Subscription plan was deleted successfully!',
+            'type' => 'success'
+        ]);
+    }
+
+    public function restore($subscriptionPlan)
+    {
+        SubscriptionPlan::withTrashed()->find($subscriptionPlan)->restore();
+        return redirect(route('subscription-plans.index'))->with([
+            'message' => 'Subscription plan was restored successfully!',
+            'type' => 'success'
+        ]);
     }
 }

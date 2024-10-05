@@ -87,7 +87,7 @@ const Menus = [
         roles: ["admin"],
     },
     {
-        link: "subscriptions.index",
+        link: "subscription-plans.index",
         icon: (
             <svg
                 width="24"
@@ -103,7 +103,7 @@ const Menus = [
                 />
             </svg>
         ),
-        text: "Subscriptions",
+        text: "Subscription Plans",
         method: "get",
         roles: ["admin"],
     },
