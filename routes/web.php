@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\MovieController as AdminMovieController;
+use App\Http\Controllers\Admin\SubscriptionPlanController as AdminSubscriptionPlanController;
 use App\Http\Controllers\BrowseController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ProfileController;
@@ -30,5 +32,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::post('subscribe/{subscription_plan}', [SubscriptionPlanController::class, 'store'])->middleware(['auth', 'role:user', 'checkUserSubscription:false'])->name('subscribe.store');
+
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    Route::resource('movies', AdminMovieController::class);
+
+    Route::put('movies/{movie}/restore', [AdminMovieController::class, 'restore'])->name('movies.restore');
+
+    Route::resource('subscription-plans', AdminSubscriptionPlanController::class);
+
+    Route::put('subscription-plans/{subscription_plan}/restore', [AdminSubscriptionPlanController::class, 'restore'])->name('subscription-plans.restore');
+});
 
 require __DIR__ . '/auth.php';

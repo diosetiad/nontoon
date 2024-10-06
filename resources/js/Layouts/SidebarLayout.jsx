@@ -16,7 +16,7 @@ export default function Sidebar({ auth, isOpen, onClose }) {
                     </Link>
                 </div>
 
-                <Navbar />
+                <Navbar isAdmin={auth.isAdmin} />
 
                 {auth.activePlan && (
                     <ActiveSubscriptionCard
