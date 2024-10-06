@@ -2,18 +2,46 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router } from "@inertiajs/react";
 import SubscriptionCard from "@/Components/SubscriptionCard";
 
-export default function Subscribe({ auth, subscriptionPlans }) {
+export default function Subscribe({ auth, subscriptionPlans, env }) {
     const handleOnClikSubscription = (id) => {
         router.post(
             route("subscribe.store", {
                 subscription_plan: id,
             }),
+            {},
+            {
+                only: ["userSubscription"],
+                onSuccess: ({ props }) => {
+                    onSnapMidtrans(props.userSubscription);
+                },
+            },
         );
+    };
+
+    const onSnapMidtrans = (userSubscription) => {
+        snap.pay(userSubscription.snap_token, {
+            onSuccess: function (result) {
+                router.visit(route("browse"));
+            },
+
+            onPending: function (result) {
+                console.log({ result });
+            },
+
+            onError: function (result) {
+                console.log({ result });
+            },
+        });
     };
 
     return (
         <AuthenticatedLayout auth={auth}>
-            <Head title="Subscribe" />
+            <Head title="Subscribe">
+                <script
+                    src="https://app.sandbox.midtrans.com/snap/snap.js"
+                    data-client-key={env.MIDTRANS_CLIENT_KEY}
+                />
+            </Head>
 
             <section className="flex flex-col items-center gap-[70px]">
                 <div className="space-y-4 text-center">
